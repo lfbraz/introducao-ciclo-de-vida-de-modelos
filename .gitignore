@@ -209,3 +209,4 @@ __marimo__/
 # MLFlow
 mlruns/
 mlartifacts/
+.github/copilot-instructions.md
