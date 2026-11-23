@@ -23,10 +23,19 @@ Além do notebook, você pode subir uma API simples em Flask para servir o model
 ### Executando localmente
 No diretório raiz do repositório:
 
+Linux/macOS/Git Bash:
 ```bash
 export FLASK_APP=aula_04_implantacao/flask-app/app.py
 python aula_04_implantacao/flask-app/app.py
 ```
+
+Windows (PowerShell):
+```powershell
+$env:FLASK_APP = "aula_04_implantacao/flask-app/app.py"
+python aula_04_implantacao/flask-app/app.py
+```
+
+> A variável `FLASK_APP` só é necessária se você usar `flask run`. Rodando `python .../app.py` diretamente, ela pode ser omitida.
 
 Endpoints:
 - `GET /` — Health check
@@ -48,6 +57,20 @@ Após mapear para strings, aplicamos **`pd.get_dummies(..., drop_first=True)` ex
 Ordem das features: a API alinha automaticamente ao conjunto e ordem originais do treinamento (via `feature_names_in_`). Colunas extras são descartadas e faltantes adicionadas com 0.
 
 ### Exemplo de requisição
+
+Windows (PowerShell) — `curl` é um alias de `Invoke-WebRequest` e não aceita a sintaxe abaixo; use `Invoke-RestMethod`:
+```powershell
+$body = @{
+    age = 57; sex = 1; cp = 0; trestbps = 130; chol = 236; fbs = 0
+    restecg = 1; thalch = 174; exang = 0; oldpeak = 0.0; slope = 1; ca = 1; thal = 2
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri http://localhost:5000/heart-disease-predict `
+    -Method Post -ContentType "application/json" -Body $body
+```
+(Alternativa: `curl.exe` chama o curl real, mas as aspas do JSON precisam de escape.)
+
+Linux/macOS/Git Bash:
 ```bash
 curl -X POST http://localhost:5000/heart-disease-predict \
 	-H "Content-Type: application/json" \

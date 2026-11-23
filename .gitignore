@@ -212,3 +212,9 @@ mlruns/
 aula_06_cicd_automacao/mlruns_local/
 mlartifacts/
 .github/copilot-instructions.md
+
+# Artefatos locais
+*.db
+err.txt
+out.txt
+.vscode/settings.json
